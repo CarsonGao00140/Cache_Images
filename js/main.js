@@ -4,11 +4,11 @@ async function fetchAndCacheImage(url) {
         let header = {headers: {"date": Date.now()}}
         let responseNew = new Response(response.body, header);
         let cache = await caches.open("images");
-        cache.put(url, responseNew);
+        cache.put(url, responseNew.clone());
         return responseNew;
 
-    } catch {
-        alert("Failed to get image.");
+    } catch(error) {
+        console.log(error);
     }
 };
 
@@ -39,7 +39,7 @@ function createImage(blob) {
             images.append(createImage(blob));
         }
         document.body.appendChild(images);
-    } catch {
-        alert("Failed to get image list.");
+    } catch(error) {
+        console.log(error);
     }
 })();
