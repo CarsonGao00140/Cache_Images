@@ -8,7 +8,7 @@ async function fetchAndCacheImage(url) {
         return responseNew;
 
     } catch(error) {
-        console.log(error);
+        console.log(`An error occurred while caching an image: ${error}`);
     }
 };
 
@@ -21,7 +21,7 @@ async function getImage(url) {
     return response;
 }
 
-function createImage(blob) {
+function createImageElement(blob) {
     let image = document.createElement("img");
     image.src = URL.createObjectURL(blob);
     return image;
@@ -36,10 +36,10 @@ function createImage(blob) {
         for (item of data) {
             let response = await getImage(item.download_url);
             let blob = await response.blob();
-            images.append(createImage(blob));
+            images.appendChild(createImageElement(blob));
         }
         document.body.appendChild(images);
     } catch(error) {
-        console.log(error);
+        console.log(`An error occurred while getting the list of images: ${error}`);
     }
 })();
